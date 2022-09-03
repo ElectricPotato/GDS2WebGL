@@ -28,6 +28,7 @@ let aVertexPosition;
 let shaderProgram;
 
 
+let z_scale_multiplier = 1; //needs a logarithmic slider to control this
 let n_layers_to_draw = 10;
 
 
@@ -119,7 +120,7 @@ window.onload = function init() {
 
         d.p_array = new Float32Array(d.points_count*6);
         const xy_max = Math.max(d.xy_range[0], d.xy_range[1]);
-        const z_scale = 1.0 / (xy_max * d.xy_nm_per_unit);
+        const z_scale = z_scale_multiplier * 1.0 / (xy_max * d.xy_nm_per_unit);
         data_size = [d.xy_range[0]*z_scale, d.xy_range[1]*z_scale];
         let i = 0;
         let state = 0;
