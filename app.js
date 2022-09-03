@@ -28,11 +28,23 @@ let aVertexPosition;
 let shaderProgram;
 
 
+let n_layers_to_draw = 10;
+
+
 window.onload = function init() {
 
     window.addEventListener("gesturestart", (e) => e.preventDefault());
     window.addEventListener("gesturechange", (e) => e.preventDefault());
     window.addEventListener("gestureend", (e) => e.preventDefault());
+    window.addEventListener("keypress", function (e) {
+        if (e.key === 'q') {
+            console.log('down a layer')
+            n_layers_to_draw -= 1;
+        }else if (e.key === 'e') {
+            console.log('up a layer')
+            n_layers_to_draw += 1;
+        }
+    });
 
     const canvas = document.querySelector("#glcanvas");
     gl = canvas.getContext("webgl");
@@ -95,7 +107,7 @@ window.onload = function init() {
     uModelViewMatrix = gl.getUniformLocation(shaderProgram, "uModelViewMatrix");
     uColor = gl.getUniformLocation(shaderProgram, "uColor");
 
-    data.forEach(function(d) {
+    data.slice(0,n_layers_to_draw).forEach(function(d) {
         d.s_array = new Uint32Array(d.edge_counts[0]*6);
         let s_array_idx = 0;
         d.e_array = new Uint32Array(d.edge_counts[1]*6);
